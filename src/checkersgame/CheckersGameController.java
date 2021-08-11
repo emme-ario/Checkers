@@ -26,13 +26,16 @@ public class CheckersGameController {
     
     private ArrayList<Piece> blackTeamPieces;
     private ArrayList<Piece> whiteTeamPieces;
+    private Rectangle[][] grid;
     
     @FXML
     public void initialize() {
         //create checkboard
+        grid = new Rectangle[tiles][tiles];
         for (int i = 0; i < size; i += tileSize) {
             for (int j = 0; j < size; j += tileSize) {
                 Rectangle r = new Rectangle(i, j, tileSize, tileSize);
+                grid[i / tileSize][j / tileSize] = r;
                 if ((j / tileSize) % 2 == 0)
                     if ((i / tileSize) % 2 == 0)
                         r.setFill(Color.WHITE);
@@ -130,6 +133,7 @@ public class CheckersGameController {
     public void released(MouseEvent event, Piece p){
         int gridX = (int)p.getX() / tileSize;
         int gridY = (int)p.getY() / tileSize;
+        grid[gridX][gridY].setFill(Color.GREENYELLOW);
         p.setX(tileSize / 2 + tileSize * gridX);
         p.setY(tileSize / 2 + tileSize * gridY);
         p.draw();
