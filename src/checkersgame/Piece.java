@@ -46,6 +46,5 @@ public class Piece {
         c.setRadius(radius);
         c.setTranslateX(x);
         c.setTranslateY(y);
-        
     }
 }

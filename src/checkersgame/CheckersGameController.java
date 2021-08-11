@@ -21,11 +21,11 @@ public class CheckersGameController {
     private int size = 800; //field dimensions
     private int tiles = 8; //number of tiles in a row
     private int tileSize = size / tiles; //size of every single tile
+            
+    private int x = tileSize / 2, y = tileSize / 2; //start position for placing pieces
     
-    int x = tileSize / 2, y = tileSize / 2; //start position for placing pieces
+    private ArrayList<Piece> pieces;
     
-    private ArrayList<Piece> blackTeamPieces;
-    private ArrayList<Piece> whiteTeamPieces;
     private Rectangle[][] grid;
     
     @FXML
@@ -50,8 +50,7 @@ public class CheckersGameController {
                 pane.getChildren().add(r);
             }
         }
-        blackTeamPieces = new ArrayList<Piece>();
-        whiteTeamPieces = new ArrayList<Piece>();
+        pieces = new ArrayList<Piece>();
         
         //Black Team pieces
         for (int i = 0; i < 3; i++) {
@@ -72,7 +71,7 @@ public class CheckersGameController {
                     c.setStroke(Color.TRANSPARENT);
                 }
                 Piece p = new Piece(x, y, radius, c);
-                blackTeamPieces.add(p);
+                pieces.add(p);
                 
                 //Made draggable
                 c.setOnMousePressed(event -> pressed(event, p));
@@ -106,7 +105,7 @@ public class CheckersGameController {
                     c.setStroke(Color.TRANSPARENT);
                 }
                 Piece p = new Piece(x, y, radius, c);
-                whiteTeamPieces.add(p);
+                pieces.add(p);
                 
                 //Made draggable
                 c.setOnMousePressed(event -> pressed(event, p));
@@ -119,9 +118,12 @@ public class CheckersGameController {
             y -= tileSize;
         }
     }
-    
+        
     public void pressed(MouseEvent event, Piece p) {
         //do something
+        /*********************************************************************/
+        p.setColor(Color.HOTPINK);                     //(Just to try somthing)
+        /*********************************************************************/
     }
     
     public void dragged(MouseEvent event, Piece p) {
@@ -133,9 +135,11 @@ public class CheckersGameController {
     public void released(MouseEvent event, Piece p){
         int gridX = (int)p.getX() / tileSize;
         int gridY = (int)p.getY() / tileSize;
-        grid[gridX][gridY].setFill(Color.GREENYELLOW);
         p.setX(tileSize / 2 + tileSize * gridX);
         p.setY(tileSize / 2 + tileSize * gridY);
+        /*********************************************************************/
+        grid[gridX][gridY].setFill(Color.GREENYELLOW); //(Just to try somthing)
+        /*********************************************************************/
         p.draw();
     }
 }
