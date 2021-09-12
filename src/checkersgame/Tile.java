@@ -20,7 +20,7 @@ public class Tile extends Rectangle {
         
         relocate(x * CheckersGameApp.TILESIZE, y * CheckersGameApp.TILESIZE);
         
-        setFill(light ? Color.WHITE : Color.GRAY);
+        setFill(light ? Color.WHITESMOKE : Color.DARKSEAGREEN);
     }
     
     private Piece piece;

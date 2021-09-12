@@ -19,6 +19,8 @@ public class CheckersGameApp extends Application {
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
     
+    private Tile[][] board = new Tile[WIDTH][HEIGHT];
+    
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
     
@@ -30,8 +32,24 @@ public class CheckersGameApp extends Application {
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 Tile tile = new Tile((x + y) % 2 == 0, x, y);
+                board[x][y] = tile;
                 
                 tileGroup.getChildren().add(tile);
+                
+                Piece piece = null;
+                
+                if (y <= 2 && (x + y) % 2 != 0) {
+                    piece = makePiece(PieceType.PURPLE, x, y);
+                }
+                
+                if (y >= 5 && (x + y) % 2 != 0) {
+                    piece = makePiece(PieceType.YELLOW, x, y);
+                }
+                
+                if (piece != null) {
+                    tile.setPiece(piece);
+                    pieceGroup.getChildren().add(piece);
+                }
             }
         }
         
@@ -45,6 +63,12 @@ public class CheckersGameApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
   }
+    
+    private Piece makePiece(PieceType type, int x, int y) {
+        Piece piece = new Piece(type, x, y);
+        
+        return piece;
+    }
     
     public static void main(String[] args) {
         launch(args);
