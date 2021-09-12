@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package checkersgame;
 
 import static checkersgame.CheckersGameApp.TILESIZE;
@@ -18,10 +13,25 @@ public class Piece extends StackPane {
     
     private PieceType type;
     
+    private double mouseX, mouseY;
+    private double oldX, oldY;
+    
+    public PieceType getType() {
+        return type;
+    }
+
+    public double getOldX() {
+        return oldX;
+    }
+
+    public double getOldY() {
+        return oldY;
+    }
+    
     public Piece(PieceType type, int x, int y) {
         this. type = type;
         
-        relocate(x * TILESIZE, y * TILESIZE);
+        move(x, y);
         
         Ellipse bg = new Ellipse(TILESIZE * 0.3125, TILESIZE * 0.26);
         bg.setFill(Color.BLACK);
@@ -38,9 +48,24 @@ public class Piece extends StackPane {
         ellipse.setTranslateY((TILESIZE - TILESIZE * 0.26 * 2) / 2);
         
         getChildren().addAll(bg, ellipse);
+        
+        setOnMousePressed(e -> {
+            mouseX = e.getSceneX();
+            mouseY = e.getSceneY();
+        });
+        
+        setOnMouseDragged(e -> {
+            relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY);
+        });
     }
     
-    public PieceType getType() {
-        return type;
+    public void move(int x, int y) {
+        oldX = x * TILESIZE;
+        oldY = y * TILESIZE;
+        relocate(oldX, oldY);
+    }
+    
+    public void abortMove() {
+        relocate(oldX, oldY);
     }
 }
